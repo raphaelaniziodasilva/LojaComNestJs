@@ -1,0 +1,5 @@
+1 Abra o terminal no seu computador vamos utilizar o PowerSheel
+2 vamos digitar o comando que vai fazer o nest criar um projeto ja pronto com todos os pacotes instalados
+2.1 npx @nestjs/cli new LojaComNestJs
+3 npm run start para iniciar o servidor
+3.1 npm run start:dev para inicializar o servidor de desenvolvimento
