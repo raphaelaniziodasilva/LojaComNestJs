@@ -11,8 +11,11 @@ import { UsuarioRepository } from './usuario.repository';
 export class UsuarioController {
     // criamos o controler agora precisamos colocar UsuarioController na arvore de modules do usuario do nestjs, criar o arquivo usuario.module.ts coloque o UsuarioController dentro de controllers
 
-    // criando o repositiorio de usuario: instanciando, com o repositorio criado use metodo salvar em criarUsuario
-    private usuarioRepository = new UsuarioRepository();
+    // injeção de dependencia e a capacidade do framework de criar certos objetos 
+    // vamos usar a injeção de dependencia. Precisamos criar um constructor e nesse construtor pedimos para o nestjs injete os objetos que queremos como parametro do construtor 
+    constructor(private usuarioRepository: UsuarioRepository) {}
+    // agora vamos para o arquivo usuario.module.ts e adicionar o prividers
+
 
     @Post() // importando e usando o decorator de @Post() para criar usuario
     // vamos importar e usar o decorator @Body() para enviar os dadosDoUsuario a requisção: postman
