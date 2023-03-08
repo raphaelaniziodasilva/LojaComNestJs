@@ -10,8 +10,14 @@ export class UsuarioRepository {
     // salvando usuario
     this.usuarios.push(usuario);
     // visualizando os usuario no cadastrado no terminal
-    console.log(this.usuarios)
+    // console.log(this.usuarios)
 
     // no controler de usuario precisamos criar o repositiorio de usuario
+  }
+
+  // listando usuarios
+  async listar() {
+    return this.usuarios;
+    // no controler use o metodo listar
   }
 }
