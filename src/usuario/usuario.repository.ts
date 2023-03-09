@@ -19,13 +19,13 @@ export class UsuarioRepository {
     // visualizando os usuario no cadastrado no terminal
     // console.log(this.usuarios)
 
-    // no controler de usuario precisamos criar o repositiorio de usuario
+    // no controler de usuario precisamos criar o repositiorio de usuario e usar o metodo salvar
   }
 
   // listando usuarios
   async listar() {
     return this.usuarios;
-    // no controler use o metodo listar
+    // no usuario controler use o metodo listar
   }
 
   // metodo que busca o usuario por email e verificando se o email ja foi criado
@@ -38,5 +38,30 @@ export class UsuarioRepository {
     // o metodo find ele vai executar e vai comparar o email que estamos informando com o email de todos os usuarios dentro do array de usuarios, se ele não encontrar ele vai devolver o valor undefined 
 
     // agora volte para o arquivo email-eh-unico.validator.ts e use o metodo existeComEmail
+  }
+
+  // aqui vamos receber um objeto Partial compativel com a nossa entidade 
+  async atualiza(id: string, dadosDeAtualizacao: Partial<UsuarioEntity>) {
+    // procurando o usuario que agente quer atualizar pelo id
+    const possivelUsuario = this.usuarios.find(
+      usuarioSalvo => usuarioSalvo.id === id
+    );
+
+    // verificando se o usuario existe
+    if(!possivelUsuario) {
+      throw new Error("Usuário não existe");
+    }
+
+    // como estamos recebendo dados Partial não podemos fazer uma atribuição direta
+    Object.entries(dadosDeAtualizacao).forEach(([chave, valor]) => {
+      if(chave === "id") {
+        return;
+      }
+      possivelUsuario[chave] = valor;
+    });
+
+    return possivelUsuario;
+
+    // no usuario controller use o metodo atualizar 
   }
 }

@@ -1,12 +1,13 @@
 /* eslint-disable prettier/prettier */
 // o controller de usuario vai ficar responsavel por lidar com a parte de rotas, receber dados e devolver respostas para os clientes da API
 
-import { Controller, Post, Body, Get } from '@nestjs/common';
+import { Controller, Post, Body, Get, Put, Param } from '@nestjs/common';
 import { CriaUsuarioDTO } from './dto/CriaUsuario.dto';
 import { UsuarioEntity } from './usuario.Entity';
 import { UsuarioRepository } from './usuario.repository';
 import {v4 as uuid} from 'uuid'
-import { ListaUsuarioDTO } from './dto/listaUsuario.dto';
+import { ListaUsuarioDTO } from './dto/ListaUsuario.dto';
+import { AtualizarUsuarioDTO } from './dto/AtualizarUsuario.dto';
 
 // decorator de @Controller() do nestjs. Todo controller no nestjs e decorado com um decorator de controller. O @Controller() vai nos dar uma rota que vai ser a raiz da aplicação 
 
@@ -65,6 +66,14 @@ export class UsuarioController {
         return usuariosLista; // resposta em Json
     }
 
+    @Put('/:id')
+    async atualizarUsuarios(@Param('id') id: string, @Body() novosDados: AtualizarUsuarioDTO) {
+        // no repositiorio usuario.repository.ts vamos criar o metodo de atualiza usuarios. Usando o metodo atualizar do repositorio 
+        const usuarioAtualizado = await this.usuarioRepository.atualiza(id, novosDados);
 
-
+        return {
+            usuario: usuarioAtualizado,
+            message: "usuário atualizado com sucesso",
+        }
+    }
 }
