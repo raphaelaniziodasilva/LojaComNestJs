@@ -2,6 +2,7 @@
 // o controller de usuario vai ficar responsavel por lidar com a parte de rotas, receber dados e devolver respostas para os clientes da API
 
 import { Controller, Post, Body, Get } from '@nestjs/common';
+import { CriaUsuarioDTO } from './dto/CriaUsuario.dto';
 import { UsuarioRepository } from './usuario.repository';
 
 // decorator de @Controller() do nestjs. Todo controller no nestjs e decorado com um decorator de controller. O @Controller() vai nos dar uma rota que vai ser a raiz da aplicação 
@@ -16,10 +17,11 @@ export class UsuarioController {
     constructor(private usuarioRepository: UsuarioRepository) {}
     // agora vamos para o arquivo usuario.module.ts e adicionar o prividers
 
-
     @Post() // importando e usando o decorator de @Post() para criar usuario
     // vamos importar e usar o decorator @Body() para enviar os dadosDoUsuario a requisção: postman
-    async criarUsuario(@Body() dadosDoUsuario) {
+    async criarUsuario(@Body() dadosDoUsuario: CriaUsuarioDTO) {
+        // os dadosDoUsuario e do tipo CriaUsuarioDTO
+
         // salvando os dados do usuario no UsuarioRepository.ts
         this.usuarioRepository.salvar(dadosDoUsuario);
         return dadosDoUsuario; // resposta em Json
