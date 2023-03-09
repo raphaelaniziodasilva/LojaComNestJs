@@ -10,7 +10,7 @@ async function bootstrap() {
     new ValidationPipe({
       // transforme o json no CriaUsuarioDTO
       transform: true,
-      // quando o nestjs for usar a orientação desse pipe ele vai ingnorar todas as propriedades que vierem no json que não estiverem no noss dto
+      // quando o nestjs for usar a orientação desse pipe ele vai ingnorar todas as propriedades que vierem no json que não estiverem no nosso dto
       whitelist: true,
       // para lançar um erro se alguem mandar um dado no json que não esta no nosso dto
       forbidNonWhitelisted: true,
