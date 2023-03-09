@@ -3,16 +3,17 @@
 // vamos salvar os dados, usuarios que forem cadastrado em uma lista de usaurios 
 
 import { Injectable } from "@nestjs/common";
+import { UsuarioEntity } from "./usuario.Entity";
 
 // Um provider no nestjs e basicamente qualquer classe que esteja decorada com o decorator @Injectable() 
 // vamos transformar a classe UsuarioRepository em um provider para o nestjs
 @Injectable()
 
 export class UsuarioRepository {
-  private usuarios = []; // lista
+  private usuarios: UsuarioEntity[] = []; // lista
   
   // guardando usuarios na lista
-  async salvar(usuario) {
+  async salvar(usuario: UsuarioEntity) {
     // salvando usuario
     this.usuarios.push(usuario);
     // visualizando os usuario no cadastrado no terminal
