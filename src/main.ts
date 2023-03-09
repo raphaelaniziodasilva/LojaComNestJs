@@ -1,6 +1,7 @@
 // arquivo que inicializa o projeto
 import { ValidationPipe } from '@nestjs/common';
 import { NestFactory } from '@nestjs/core';
+import { useContainer } from 'class-validator';
 import { AppModule } from './app.module';
 
 async function bootstrap() {
@@ -16,6 +17,10 @@ async function bootstrap() {
       forbidNonWhitelisted: true,
     }),
   );
+
+  // pro class validator resolver as dependencias que so o nest sabe resolver agente precisa passar aqui o mesmo container de resolução de dependencia que o nest usa
+  useContainer(app.select(AppModule), { fallbackOnErrors: true });
+
   await app.listen(3000);
 }
 bootstrap();

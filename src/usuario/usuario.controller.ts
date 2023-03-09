@@ -9,6 +9,7 @@ import { UsuarioRepository } from './usuario.repository';
 
 // dentro do decorator @Controller(rota) vamos criar a nossa rota para recebermos as requisições http
 @Controller('/usuarios') // importando e usando o @Controller para usuarios
+
 export class UsuarioController {
     // criamos o controler agora precisamos colocar UsuarioController na arvore de modules do usuario do nestjs, criar o arquivo usuario.module.ts coloque o UsuarioController dentro de controllers
 

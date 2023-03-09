@@ -4,6 +4,7 @@
 
 // a importação tem que ser igual a from "class-validator" se for diferente vai dar erro!!
 import { IsEmail, IsNotEmpty, MinLength } from "class-validator";
+import { EmailEhUnico } from "../validacao/email-eh-unico.validator";
 
 // Aqui vamos criar as validações do usuario usando os decoratos do class validator
 export class CriaUsuarioDTO {
@@ -11,6 +12,7 @@ export class CriaUsuarioDTO {
     nome: string;
 
     @IsEmail(undefined, {message: "O email informado é invalido"}) // e um email
+    @EmailEhUnico({message: "O email informado é invalido, já existe um usuario come este enail"}) // verifica se o email ja foi cadastrado
     email: string;
 
     @MinLength(6, {message: "A senha precisa ter pelo menos 6 caracteres"}) // senha no minimo 6 digitos ou catacteres
