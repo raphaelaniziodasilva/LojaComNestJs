@@ -9,7 +9,7 @@ async function bootstrap() {
   // vamos dizer para o nestjs deixar usar o GlobalPipes para fazer as validações
   app.useGlobalPipes(
     new ValidationPipe({
-      // transforme o json no CriaUsuarioDTO
+      // transforme o json nos DTO
       transform: true,
       // quando o nestjs for usar a orientação desse pipe ele vai ingnorar todas as propriedades que vierem no json que não estiverem no nosso dto
       whitelist: true,

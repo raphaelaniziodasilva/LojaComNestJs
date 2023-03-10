@@ -6,11 +6,11 @@ import { Injectable } from "@nestjs/common";
 import { registerDecorator, ValidationArguments, ValidationOptions, ValidatorConstraint, ValidatorConstraintInterface } from "class-validator";
 import { UsuarioRepository } from "../usuario.repository";
 
-// para o usuarioRepository ser injetado aqui dentro do EmailEhUnicoValidator precisamos transformar ele em um provider 
+// para o usuarioRepository ser injetado aqui dentro do EmailEhUnicoValidator precisamos transformar ele em um provider va para o arquivo usuario.repository.ts
 @Injectable()
 // para o nestjs encontrar esse objeto e poder criar e injetar as dependencias ele precisa estar dentro daquele array de providers do nosso modulo de usuario, va para o usuario.module.ts e adicione dentro do providers o objeto EmailEhUnicoValidator
 
-// vamos informar pro class validator que essa validação ela é asyncrona 
+// vamos informar pro class validator que essa validação ela é asyncrona
 @ValidatorConstraint({async: true})
 
 export class EmailEhUnicoValidator implements ValidatorConstraintInterface {

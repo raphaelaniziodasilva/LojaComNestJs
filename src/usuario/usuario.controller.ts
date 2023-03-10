@@ -1,7 +1,7 @@
 /* eslint-disable prettier/prettier */
 // o controller de usuario vai ficar responsavel por lidar com a parte de rotas, receber dados e devolver respostas para os clientes da API
 
-import { Controller, Post, Body, Get, Put, Param } from '@nestjs/common';
+import { Controller, Post, Body, Get, Put, Param, Delete } from '@nestjs/common';
 import { CriaUsuarioDTO } from './dto/CriaUsuario.dto';
 import { UsuarioEntity } from './usuario.Entity';
 import { UsuarioRepository } from './usuario.repository';
@@ -25,7 +25,7 @@ export class UsuarioController {
     @Post() // importando e usando o decorator de @Post() para criar usuario
     // vamos importar e usar o decorator @Body() para enviar os dadosDoUsuario a requisção: postman
     async criarUsuario(@Body() dadosDoUsuario: CriaUsuarioDTO) {
-        // os dadosDoUsuario e do tipo CriaUsuarioDTO
+        // os dadosDoUsuario e do tipo CriaUsuarioDTO que contém as validações, crie um arquivo CriaUsuario.dto.ts na pasta dto
 
         // instanciando um usuario: criando um usuario e atribuindo seus dados
         const usuarioEntity = new UsuarioEntity();
@@ -55,6 +55,7 @@ export class UsuarioController {
         // no repositiorio usuario.repository.ts vamos criar o metodo de listar usuarios. Usando o metodo listar do repositorio
         const usuariosSalvo = await this.usuarioRepository.listar();
 
+        // vamos mostrar somente o nome e o id do usuario quando for listado, crie um arquivo ListaUsuario.dto.ts na pasta dto 
         // vamos transformar as nossas entidades nos dtos de visualização que criamos    
         const usuariosLista = usuariosSalvo.map(
             // para cada usuario que passar pelo map
@@ -68,12 +69,25 @@ export class UsuarioController {
 
     @Put('/:id')
     async atualizarUsuarios(@Param('id') id: string, @Body() novosDados: AtualizarUsuarioDTO) {
+        // os novosDados e do tipo AtualizarUsuarioDTO que contém as atualizações opcionais e validações, crie um arquivo AtualizarUsuario.dto.ts na pasta dto
+
         // no repositiorio usuario.repository.ts vamos criar o metodo de atualiza usuarios. Usando o metodo atualizar do repositorio 
         const usuarioAtualizado = await this.usuarioRepository.atualiza(id, novosDados);
 
         return {
             usuario: usuarioAtualizado,
             message: "usuário atualizado com sucesso",
-        }
+        } // resposta em Json
+    }
+
+    @Delete('/:id')
+    async removeUsuario(@Param('id') id: string) {
+        // no repositiorio usuario.repository.ts vamos criar o metodo de remove usuarios. Usando o metodo remove do repositorio 
+        const usuarioRemovido = await this.usuarioRepository.remove(id);
+
+        return {
+            usuario:usuarioRemovido,
+            message: "usuário removido com sucesso"
+        } // resposta em Json
     }
 }

@@ -40,7 +40,7 @@ export class UsuarioRepository {
     // agora volte para o arquivo email-eh-unico.validator.ts e use o metodo existeComEmail
   }
 
-  // aqui vamos receber um objeto Partial compativel com a nossa entidade 
+  // Atualizando usuario, aqui vamos receber um objeto Partial compativel com a nossa entidade 
   async atualiza(id: string, dadosDeAtualizacao: Partial<UsuarioEntity>) {
     // procurando o usuario que agente quer atualizar pelo id
     const possivelUsuario = this.usuarios.find(
@@ -59,9 +59,29 @@ export class UsuarioRepository {
       }
       possivelUsuario[chave] = valor;
     });
-
     return possivelUsuario;
 
     // no usuario controller use o metodo atualizar 
+  }
+
+  // romovendo usuario
+  async remove(id: string) {
+    // procurando o usuario que agente quer remover pelo id
+    const possivelUsuario = this.usuarios.find(
+      usuarioSalvo => usuarioSalvo.id === id
+    );
+
+    // verificando se o usuario existe
+    if(!possivelUsuario) {
+      throw new Error("Usuário não existe");
+    }
+
+    // ja encontramos o usuário agora vamos remove-lo
+    this.usuarios = this.usuarios.filter(
+      usuario => usuario.id !== id
+    );
+
+    return possivelUsuario;
+    // no usuario controller use o metodo remove 
   }
 }
