@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { HttpStatus, Injectable, NotFoundException } from '@nestjs/common';
 import { ProdutoEntity } from './produto.entity';
 
 @Injectable()
@@ -14,11 +14,14 @@ export class ProdutoRepository {
     return dadosProduto;
   }
 
-  private buscaPorId(id: string) {
+  buscaPorId(id: string) {
     const possivelProduto = this.produtos.find((produto) => produto.id === id);
 
     if (!possivelProduto) {
-      throw new Error('Produto não existe');
+      throw new NotFoundException({
+        statusCode: HttpStatus.NOT_FOUND,
+        message: 'Produto não encontado',
+      });
     }
     return possivelProduto;
   }

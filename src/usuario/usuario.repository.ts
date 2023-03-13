@@ -2,7 +2,7 @@
 // No momento não vamos nos preocupar com banco de dados BD
 // vamos salvar os dados, usuarios que forem cadastrado em uma lista de usaurios 
 
-import { Injectable } from "@nestjs/common";
+import { HttpStatus, Injectable, NotFoundException } from "@nestjs/common";
 import { UsuarioEntity } from "./usuario.Entity";
 
 // Um provider no nestjs e basicamente qualquer classe que esteja decorada com o decorator @Injectable() 
@@ -28,11 +28,27 @@ export class UsuarioRepository {
     // no usuario controler use o metodo listar
   }
 
+  // metodo para buscar usuario pelo nome
+  async buscaPorNomeDeUsuario(nomeDoUsuario: string) {
+    const usuarioexiste =  this.usuarios.find(
+      usuario => usuario.nome == nomeDoUsuario
+    );  
+
+    if(!usuarioexiste) {
+      throw new NotFoundException( {
+          statusCode: HttpStatus.NOT_FOUND,
+          message: 'Uusário não encontrado'
+      })
+    }
+    return usuarioexiste;
+  }
+
   // metodo que busca o usuario por email e verificando se o email ja foi criado
   async existeComEmail(email: string) {
     const possivelUsuario = this.usuarios.find(
       usuario => usuario.email == email
     );
+    
     return possivelUsuario !== undefined;
 
     // o metodo find ele vai executar e vai comparar o email que estamos informando com o email de todos os usuarios dentro do array de usuarios, se ele não encontrar ele vai devolver o valor undefined 
@@ -49,7 +65,10 @@ export class UsuarioRepository {
 
     // verificando se o usuario existe
     if(!possivelUsuario) {
-      throw new Error("Usuário não existe");
+      throw new NotFoundException( {
+        statusCode: HttpStatus.NOT_FOUND,
+        message: 'Uusário não encontrado'
+      });      
     }
 
     // como estamos recebendo dados Partial não podemos fazer uma atribuição direta
@@ -73,7 +92,10 @@ export class UsuarioRepository {
 
     // verificando se o usuario existe
     if(!possivelUsuario) {
-      throw new Error("Usuário não existe");
+      throw new NotFoundException( {
+        statusCode: HttpStatus.NOT_FOUND,
+        message: 'Uusário não encontrado'
+      });      
     }
 
     // ja encontramos o usuário agora vamos remove-lo

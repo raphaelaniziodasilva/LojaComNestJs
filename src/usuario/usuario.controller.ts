@@ -1,7 +1,7 @@
 /* eslint-disable prettier/prettier */
 // o controller de usuario vai ficar responsavel por lidar com a parte de rotas, receber dados e devolver respostas para os clientes da API
 
-import { Controller, Post, Body, Get, Put, Param, Delete } from '@nestjs/common';
+import { Controller, Post, Body, Get, Put, Param, Delete, HttpStatus, NotFoundException } from '@nestjs/common';
 import { CriaUsuarioDTO } from './dto/CriaUsuario.dto';
 import { UsuarioEntity } from './usuario.Entity';
 import { UsuarioRepository } from './usuario.repository';
@@ -65,6 +65,13 @@ export class UsuarioController {
             )
         );
         return usuariosLista; // resposta em Json
+    }
+
+    @Get('/:nomeDoUsuario')
+    public buscaPorNomeDeUsuario(@Param('nomeDoUsuario') nomeDoUsuario: string) {
+        // vá para o arquivo usuario.repository.ts e crie o metodo criar buscaPorNomeDeUsuario
+        const usuarioEncontrado = this.usuarioRepository.buscaPorNomeDeUsuario(nomeDoUsuario)
+        return usuarioEncontrado
     }
 
     @Put('/:id')
